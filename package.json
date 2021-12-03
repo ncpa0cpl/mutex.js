@@ -18,10 +18,31 @@
   "name": "mutex.js",
   "version": "1.0.0",
   "main": "./dist/index.js",
+  "keywords": [
+    "mutex",
+    "mutual",
+    "exclusion",
+    "lock",
+    "race",
+    "condition",
+    "atomic",
+    "atomicity",
+    "transaction",
+    "synchronization"
+  ],
+  "description": "Mutual Exclusion mechanism for Asynchronous JS Code.",
   "scripts": {
     "build": "node esbuild.js & tsc -p ./tsconfig.build.json --emitDeclarationOnly",
     "lint": "eslint .",
     "tsc": "tsc --noEmit",
     "test": "jest --coverage"
-  }
+  },
+  "author": {
+    "name": "Szymon Bretner (ncpa0cpl)",
+    "url": "https://github.com/ncpa0cpl/"
+  },
+  "repository": {
+    "url": "https://github.com/ncpa0cpl/mutex.js"
+  },
+  "license": "MIT"
 }
