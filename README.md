@@ -2,7 +2,7 @@
 
 Mutual Exclusion mechanism for Asynchronous JS Code.
 
-## Usage
+## Mutex
 
 Usage of the Mutex is plain and simple. Mutex class provided by this package has only two methods available, `acquire()` and `release()`.
 
@@ -15,7 +15,7 @@ Usage of the Mutex is plain and simple. Mutex class provided by this package has
 The most simple usage of the Mutex class
 
 ```ts
-import Mutex from "mutex.js";
+import { Mutex } from "mutex.js";
 
 class Foo {
   private readonly mutex = new Mutex();
@@ -36,7 +36,7 @@ class Foo {
 A function that takes a callback and executes it with an acquired Mutex lock
 
 ```ts
-import Mutex from "mutex.js";
+import { Mutex } from "mutex.js";
 
 const mutex = new Mutex();
 
@@ -56,6 +56,52 @@ const foo: string = await transaction(async () => {
   // some async code
   return "success";
 });
+```
+
+## RWMutex
+
+RWMutex (or read/write mutex) is specialized mutex type the allows for multiple read operations to happen simultaneously, but write operations are always atomic in relation to every other operation.
+
+It works similarly to the regular Mutex, but each "acquire" and "release" must specify if the operation is a read or a write.
+
+Methods it exposes are:
+
+- `acquireWrite()` should be called and awaited before writing to the shared resource.
+
+- `releaseWrite()` should be called after acquiring and finishing the write operation on the shared resource.
+
+- `acquireRead()` should be called and awaited before reading the shared resource.
+
+- `releaseRead()` should be called after acquiring and finishing the reading operation on the shared resource.
+
+### Example
+
+```ts
+class DBConnection {
+  private mutex = new RWMutex();
+
+  // Writes to the DB
+  async insert() {
+    await this.mutex.acquireWrite();
+
+    try {
+      // <put your async code here>
+    } finally {
+      this.mutex.releaseWrite();
+    }
+  }
+
+  // Read from the DB
+  async select() {
+    await this.mutex.acquireRead();
+
+    try {
+      // <put your async code here>
+    } finally {
+      this.mutex.releaseRead();
+    }
+  }
+}
 ```
 
 ## What's a Mutual Exclusion (ie. Mutex)?
