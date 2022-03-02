@@ -1,31 +1,34 @@
 import { Lock } from "./lock";
 
 /**
- * Mutex class instances provides an API for creating
- * asynchronous mutual exclusion Locks.
+ * Mutex class instances provide an API for creating asynchronous
+ * mutual exclusion Locks.
  *
  * Locks are a mechanism for synchronizing otherwise asynchronous actions.
  *
  * Locks have three states:
  *
- * - Acquired - Lock has been created and is awaiting for it to be opened.
- * - Opened - Lock has been opened and as long as it remains that
- *   way no other Lock from the same Mutex can change it's state
- * - Released - Lock is no longer blocking other Lock's from being Opened
+ * - Waiting - other Locks are currently acquired, waiting for
+ *   other locks to release
+ * - Acquired - Lock has been acquired and as long as it remains
+ *   that way any other attempts to acquire a lock will be
+ *   suspended until this lock releases
+ * - Released - Lock is no longer blocking other Lock's from being acquired
  *
  * @example
  *   class DBConnection {
  *     private mutex = new Mutex();
  *
  *     async insert() {
- *       const lock = this.mutex.acquire(); // Lock has been acquired
- *       await lock; // Waiting for the lock to open
- *       // We recommend to use a simpler syntax:
- *       // await this.mutex.acquire();
+ *       const lock = this.mutex.acquire(); // Requesting a lock to be acquired
+ *       await lock; // Waiting for the acquire request
  *
- *       // <put your async code here>
+ *       try {
+ *         // <put your async code here>
+ *       } catch (e) {}
  *
- *       this.mutex.release(); // Lock is released, other lock can be opened now
+ *       this.mutex.release();
+ *       // Lock is released, from now on other locks can be acquired
  *     }
  *   }
  */
@@ -33,7 +36,7 @@ export class Mutex {
   private readonly _requests: Lock[] = [];
 
   private async _nextRequest() {
-    this._requests[0]?.open();
+    this._requests[0]?.release();
   }
 
   /**
