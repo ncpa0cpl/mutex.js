@@ -1,3 +1,5 @@
 import { Mutex } from "./mutex";
-export { Mutex };
-export default Mutex;
+import { RWMutex } from "./rw-mutex";
+import { Semaphore } from "./semaphore";
+export { Mutex, RWMutex, Semaphore };
+export default { Mutex, RWMutex, Semaphore };
