@@ -18,7 +18,15 @@
   },
   "name": "mutex.js",
   "version": "1.0.0",
-  "main": "./dist/index.js",
+  "main": "./dist/legacy/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.mjs",
+      "require": "./dist/cjs/index.cjs"
+    }
+  },
   "keywords": [
     "mutex",
     "mutual",
