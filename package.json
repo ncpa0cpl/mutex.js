@@ -17,7 +17,7 @@
     "prettier-plugin-jsdoc": "^0.3.30",
     "typescript": "^4.5.2"
   },
-  "name": "mutex.js",
+  "name": "@ncpa0cpl/mutex.js",
   "version": "1.0.0",
   "main": "./dist/legacy/index.js",
   "types": "./dist/types/index.d.ts",
@@ -45,7 +45,8 @@
     "build": "node ./scripts/build.mjs",
     "lint": "eslint .",
     "tsc": "tsc --noEmit",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "publish:package": "npm publish --access public --@ncpa0cpl:registry=https://registry.npmjs.org"
   },
   "author": {
     "name": "Szymon Bretner (ncpa0cpl)",
