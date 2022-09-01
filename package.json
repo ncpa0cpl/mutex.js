@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@ncpa0cpl/nodepack": "^1.2.2",
     "@types/jest": "^27.0.3",
     "@types/node": "^16.11.11",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
@@ -32,7 +33,7 @@
   ],
   "description": "Mutual Exclusion mechanism for Asynchronous JS Code.",
   "scripts": {
-    "build": "node esbuild.js & tsc -p ./tsconfig.build.json --emitDeclarationOnly",
+    "build": "node ./scripts/build.mjs",
     "lint": "eslint .",
     "tsc": "tsc --noEmit",
     "test": "jest --coverage"
